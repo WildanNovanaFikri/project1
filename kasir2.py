@@ -1,4 +1,4 @@
-print("============== RESTORAN PAK MBUD ==============")
+print("============== RESTORAN MAS MBUD ==============")
 pembeli = input("Masukkan nama Pembeli: ")
 print ("Nama Pembeli :", pembeli) 
 
