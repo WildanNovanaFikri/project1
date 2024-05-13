@@ -1,32 +1,32 @@
-
 import tkinter as tk
 from tkinter import messagebox
 
-# Dictionary to store food and drink information (name and price)
+# Dictionary untuk menyimpan informasi makanan (nama dan harga)
 food_menu = {
     "Nasi Goreng": 15000,
     "Soto": 13000,
     "Mie Ayam": 10000,
     "Bakso": 15000,
-    "Mie Goreng": 12000,
+    "Mie Goreng": 10000,
     "Rawon": 18000,
     "Gado-Gado": 14000,
-    "Nasi Kuning": 16000,
+    "Nasi Kuning": 12000,
     "Ayam Goreng": 17000,
     "Rendang": 20000
 }
 
+# Dictionary untuk menyimpan informasi minuman (nama dan harga)
 drink_menu = {
     "Es Teh Manis": 5000,
-    "Es Jeruk": 7000,
+    "Es Jeruk": 9000,
     "Air Mineral": 3000,
     "Aneka Jus": 10000,
     "Es Campur": 10000,
     "Es Cincau": 6000,
     "Soda Gembira": 8000,
-    "Teh Tarik": 9000,
-    "Kopi Susu": 11000,
-    "Jus Alpukat": 12000
+    "Teh Tarik": 7000,
+    "Kopi Susu": 5000,
+    "Es Cendol": 7000
 }
 
 def hitung_total_pembelian():
@@ -55,11 +55,11 @@ def hitung_tagihan():
         nonlocal porsi
         nonlocal makan
         
-        # Get the selected food item string
+        # Dapatkan string item makanan yang dipilih
         selected_item = makanan_var.get()
         
-        # Extract the food name and price
-        makan = selected_item.split('.')[1].split()
+        # Ekstrak nama makanan dari string yang dipilih
+        makan = selected_item.split('. ')[1].split(' (')[0].strip()
         harga = food_menu[makan]
         
         porsi = int(porsi_entry.get())
@@ -73,11 +73,11 @@ def hitung_tagihan():
         nonlocal gelas
         nonlocal minum
         
-        # Get the selected drink item string
+        # Dapatkan string item minuman yang dipilih
         selected_item = minuman_var.get()
         
-        # Extract the drink name and price
-        minum = selected_item.split('.')[1].strip()
+        # Ekstrak nama minuman dari string yang dipilih
+        minum = selected_item.split('. ')[1].split(' (')[0].strip()
         harga = drink_menu[minum]
         
         gelas = int(gelas_entry.get())
@@ -105,6 +105,7 @@ def hitung_tagihan():
     total_pembelian_label_entry.delete(0, tk.END)
     total_pembelian_label_entry.insert(0, f"Rp {total_pembelian}")
     
+    
     # Mengambil jumlah uang yang diberikan pelanggan
     uang_diberikan = int(uang_entry.get())
     
@@ -128,7 +129,10 @@ def hitung_tagihan():
 
 app = tk.Tk()
 app.title("Restoran Pak Mbud")
-app.geometry("400x500")
+app.geometry("500x500")
+
+# Tambahkan warna latar belakang
+app.configure(bg="lightblue")
 
 pembeli_label = tk.Label(app, text="Masukkan nama Pembeli:")
 pembeli_label.pack()
@@ -140,7 +144,7 @@ makanan_label.pack()
 
 makanan_var = tk.StringVar()
 makanan_var.set("")
-makanan_option = tk.OptionMenu(app, makanan_var, *["{}. {}".format(num, food, ) for num, food in enumerate(food_menu.keys(), start=1)])
+makanan_option = tk.OptionMenu(app, makanan_var, *["{}. {} (Rp {})".format(num, food, price) for num, (food, price) in enumerate(food_menu.items(), start=1)])
 makanan_option.pack()
 
 porsi_label = tk.Label(app, text="Berapa Porsi:")
@@ -153,7 +157,7 @@ minuman_label.pack()
 
 minuman_var = tk.StringVar()
 minuman_var.set("")
-minuman_option = tk.OptionMenu(app, minuman_var, *["{}. {}".format(num, drink) for num, drink in enumerate(drink_menu.keys(), start=1)])
+minuman_option = tk.OptionMenu(app, minuman_var, *["{}. {} (Rp {})".format(num, drink, price) for num, (drink, price) in enumerate(drink_menu.items(), start=1)])
 minuman_option.pack()
 
 gelas_label = tk.Label(app, text="Berapa Gelas:")

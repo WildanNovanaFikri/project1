@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from tkinter import messagebox
 
@@ -59,7 +58,7 @@ def hitung_tagihan():
         selected_item = makanan_var.get()
         
         # Extract the food name and price
-        makan = selected_item.split('.')[1].split()
+        makan = selected_item.split('.')[1].strip()
         harga = food_menu[makan]
         
         porsi = int(porsi_entry.get())
@@ -105,6 +104,7 @@ def hitung_tagihan():
     total_pembelian_label_entry.delete(0, tk.END)
     total_pembelian_label_entry.insert(0, f"Rp {total_pembelian}")
     
+    
     # Mengambil jumlah uang yang diberikan pelanggan
     uang_diberikan = int(uang_entry.get())
     
@@ -127,7 +127,7 @@ def hitung_tagihan():
     messagebox.showinfo("Nota Pembayaran", notification_msg)
 
 app = tk.Tk()
-app.title("Restoran Pak Mbud")
+app.title("Program Kasir Restoran")
 app.geometry("400x500")
 
 pembeli_label = tk.Label(app, text="Masukkan nama Pembeli:")
@@ -139,8 +139,8 @@ makanan_label = tk.Label(app, text="Pilih Makanan:")
 makanan_label.pack()
 
 makanan_var = tk.StringVar()
-makanan_var.set("")
-makanan_option = tk.OptionMenu(app, makanan_var, *["{}. {}".format(num, food, ) for num, food in enumerate(food_menu.keys(), start=1)])
+makanan_var.set("1. Nasi Goreng")
+makanan_option = tk.OptionMenu(app, makanan_var, *["{}. {}".format(num, food) for num, food in enumerate(food_menu.keys(), start=1)])
 makanan_option.pack()
 
 porsi_label = tk.Label(app, text="Berapa Porsi:")
@@ -152,7 +152,7 @@ minuman_label = tk.Label(app, text="Pilih Minuman:")
 minuman_label.pack()
 
 minuman_var = tk.StringVar()
-minuman_var.set("")
+minuman_var.set("1. Es Teh Manis")
 minuman_option = tk.OptionMenu(app, minuman_var, *["{}. {}".format(num, drink) for num, drink in enumerate(drink_menu.keys(), start=1)])
 minuman_option.pack()
 
@@ -175,3 +175,5 @@ hitung_button = tk.Button(app, text="Hitung", command=hitung_tagihan)
 hitung_button.pack()
 
 app.mainloop()
+
+
